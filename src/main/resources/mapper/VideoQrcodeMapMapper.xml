@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhihuishu.tool.mapper.VideoQrcodeMapMapper" >
+  <resultMap id="BaseResultMap" type="com.zhihuishu.tool.model.VideoQrcodeMap" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="INTEGER" />
+    <result column="BOOK_ID" property="bookId" jdbcType="INTEGER" />
+    <result column="B_COURSE_ID" property="bCourseId" jdbcType="INTEGER" />
+    <result column="B_VIDEO_ID" property="bVideoId" jdbcType="INTEGER" />
+    <result column="C_COURSE_ID" property="cCourseId" jdbcType="INTEGER" />
+    <result column="C_VIDEO_ID" property="cVideoId" jdbcType="INTEGER" />
+    <result column="LIVE_ID" property="liveId" jdbcType="INTEGER" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="USE_STATUS" property="useStatus" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, TYPE, BOOK_ID, B_COURSE_ID, B_VIDEO_ID, C_COURSE_ID, C_VIDEO_ID, LIVE_ID, URL, 
+    USE_STATUS, CREATE_TIME, UPDATE_TIME, IS_DELETE
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from TBL_VIDEO_QRCODE_MAP
+    where IS_DELETE = 0 AND ID = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="findQRCodeIdList" resultType="com.zhihuishu.tool.model.VideoQrcodeMap">
+  	SELECT
+		*
+	FROM
+		TBL_VIDEO_QRCODE_MAP t
+	WHERE
+		t.IS_DELETE = 0
+	AND t.USE_STATUS = 0
+	<if test="type != null">AND t.TYPE =</if>
+	<if test="bookId != null">AND t.BOOK_ID =</if>
+  </select>
+  
+  <select id="findAll" resultType="com.zhihuishu.tool.model.VideoQrcodeMap">
+  	 SELECT
+		*
+	FROM
+		TBL_VIDEO_QRCODE_MAP t
+	WHERE
+		t.IS_DELETE = 0
+  </select>
+</mapper>
